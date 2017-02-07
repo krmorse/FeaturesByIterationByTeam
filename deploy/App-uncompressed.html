@@ -7,7 +7,10 @@
 
     <script type="text/javascript">
         Rally.onReady(function () {
-                Ext.define('IterationColumn', {
+                /* global Ext */
+/* global Rally */
+
+Ext.define('IterationColumn', {
     extend: 'Rally.ui.cardboard.Column',
     alias: 'widget.iterationcolumn',
 
@@ -92,10 +95,13 @@
         return this.iterations[0];
     }
 });
-                Ext.define('CustomApp', {
+                /* global Ext */
+/* global Rally */
+/* global _ */
+
+Ext.define('CustomApp', {
     extend: 'Rally.app.TimeboxScopedApp',
     componentCls: 'app',
-
     requires: [
         'IterationColumn'
     ],
@@ -168,6 +174,29 @@
                             }
                         }
                     }
+                },
+                {
+                    ptype: 'rallygridboardfieldpicker',
+                    headerPosition: 'left',
+                    modelNames: modelNames,
+                    stateful: true,
+                    stateId: context.getScopedStateId('columns-example')
+                },
+                {
+                    ptype: 'rallygridboardactionsmenu',
+                        menuItems: [
+                            {
+                                text: 'Print...',
+                                handler: function () {
+                                    this.down('rallygridboard').getGridOrBoard().openPrintPage({title: 'Program Board'});
+                                },
+                                scope: this
+                            }
+                            //
+                        ],
+                        buttonConfig: {
+                            iconCls: 'icon-export'
+                        }
                 }
             ],
             cardBoardConfig: {
