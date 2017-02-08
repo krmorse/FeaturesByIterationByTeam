@@ -1,3 +1,6 @@
+/* global Ext */
+/* global Rally */
+
 Ext.define('IterationColumn', {
     extend: 'Rally.ui.cardboard.Column',
     alias: 'widget.iterationcolumn',

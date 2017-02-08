@@ -1,7 +1,10 @@
+/* global Ext */
+/* global Rally */
+/* global _ */
+
 Ext.define('CustomApp', {
     extend: 'Rally.app.TimeboxScopedApp',
     componentCls: 'app',
-
     requires: [
         'IterationColumn'
     ],
@@ -74,6 +77,29 @@ Ext.define('CustomApp', {
                             }
                         }
                     }
+                },
+                {
+                    ptype: 'rallygridboardfieldpicker',
+                    headerPosition: 'left',
+                    modelNames: modelNames,
+                    stateful: true,
+                    stateId: context.getScopedStateId('columns-example')
+                },
+                {
+                    ptype: 'rallygridboardactionsmenu',
+                        menuItems: [
+                            {
+                                text: 'Print...',
+                                handler: function () {
+                                    this.down('rallygridboard').getGridOrBoard().openPrintPage({title: 'Program Board'});
+                                },
+                                scope: this
+                            }
+                            //
+                        ],
+                        buttonConfig: {
+                            iconCls: 'icon-export'
+                        }
                 }
             ],
             cardBoardConfig: {
