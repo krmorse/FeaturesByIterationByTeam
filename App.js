@@ -56,6 +56,17 @@ Ext.define('CustomApp', {
             modelNames = ['portfolioitem/feature'],
             context = this.getContext();
 
+        var columns = _.sortBy(_.map(iterations, function(likeIterations) {
+            return {
+                xtype: 'iterationcolumn',
+                iterations: likeIterations
+            };
+        }), function(column) { return column.iterations[0].get('StartDate'); });
+
+        if (this.down('rallygridboard')) {
+            this.down('rallygridboard').destroy();
+        }
+
         this.add({
             xtype: 'rallygridboard',
             context: context,
@@ -103,6 +114,10 @@ Ext.define('CustomApp', {
                 }
             ],
             cardBoardConfig: {
+                plugins: [
+                    { ptype: 'rallyfixedheadercardboard'},
+                    { ptype: 'rallycardboardprinting' }
+                ],
                 readOnly: true,
                 cardConfig: {
                     editable: false,
@@ -114,12 +129,7 @@ Ext.define('CustomApp', {
                 rowConfig: {
                     field: 'Project'
                 },
-                columns: _.map(iterations, function(likeIterations) {
-                    return {
-                        xtype: 'iterationcolumn',
-                        iterations: likeIterations
-                    };
-                }),
+                columns: columns,
                 attribute: 'Release'
             }
         });
